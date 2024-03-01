@@ -12,6 +12,37 @@ An accounting department needs information on price changes that happened for th
 
 To add a pricing history, continue the work in the file `app/lib/price_history.rb`.
 
+As an example, assuming the following prices exist
+| Package       | Municipality  | Price   | Date        |
+| ------------- | ------------- | ------: | ----------: |
+| Premium       | Stockholm     | 100 kr  | 2023-04-01  |
+| Premium       | Stockholm     | 125 kr  | 2023-08-02  |
+| Premium       | Stockholm     | 175 kr  | 2023-12-24  |
+| Premium       | Göteborg      | 25 kr   | 2022-09-01  |
+| Premium       | Göteborg      | 50 kr   | 2023-02-03  |
+| Premium       | Göteborg      | 75 kr   | 2023-05-20  |
+| Bas           | Göteborg      | 100 kr  | 2023-06-01  |
+
+We expect something similar to the output below.
+```ruby
+# Example without municipality
+PriceHistory.call(
+  year: "2023",
+  package: "premium",
+)
+
+=> { "Stockholm" => [100_00, 125_00, 175_00], "Göteborg" => [50_00, 75_00] }
+
+# Example with municipality. Stockholm is filtered out.
+PriceHistory.call(
+  year: "2023",
+  package: "premium",
+  municipality: "göteborg",
+)
+
+=> { "Göteborg" => [50_00, 75_00] }
+```
+
 ## Starting out
 **NOTE: In this assignment we assume you are comfortable with developing Rails applications.**
 
