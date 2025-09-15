@@ -1,0 +1,5 @@
+{
+    "rubyLsp.enabledFeatures": {
+        "formatting": false
+    }
+}

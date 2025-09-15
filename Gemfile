@@ -26,3 +26,9 @@ group :development, :test do
   gem "rubocop-rspec",       require: false
   gem "rubocop-rspec_rails", require: false
 end
+
+group :development do
+  gem "ruby-lsp",       require: false
+  gem "ruby-lsp-rails", require: false
+  gem "ruby-lsp-rspec", require: false
+end
