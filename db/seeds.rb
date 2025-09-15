@@ -3,6 +3,15 @@
 puts "Removing old packages and their price histories"
 Package.destroy_all
 
+puts "Removing old municipalities"
+Municipality.destroy_all
+
+puts "Creating municipalities"
+
+Municipality.insert_all(
+  YAML.load_file(Rails.root.join("import/municipalities.yaml"))
+)
+
 puts "Creating new packages"
 
 Package.insert_all(
