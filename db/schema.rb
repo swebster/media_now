@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_15_180816) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_16_175400) do
+  create_table "local_packages", force: :cascade do |t|
+    t.integer "package_id", null: false
+    t.integer "municipality_id", null: false
+    t.integer "amount_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["municipality_id"], name: "index_local_packages_on_municipality_id"
+    t.index ["package_id", "municipality_id"], name: "index_local_packages_on_package_id_and_municipality_id", unique: true
+    t.index ["package_id"], name: "index_local_packages_on_package_id"
+  end
+
   create_table "municipalities", force: :cascade do |t|
     t.string "name", limit: 15, null: false
     t.datetime "created_at", null: false
@@ -34,5 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_15_180816) do
     t.index ["package_id"], name: "index_prices_on_package_id"
   end
 
+  add_foreign_key "local_packages", "municipalities", on_delete: :cascade
+  add_foreign_key "local_packages", "packages", on_delete: :cascade
   add_foreign_key "prices", "packages"
 end
