@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_16_175400) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_17_072529) do
   create_table "local_packages", force: :cascade do |t|
     t.integer "package_id", null: false
     t.integer "municipality_id", null: false
@@ -20,6 +20,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_175400) do
     t.index ["municipality_id"], name: "index_local_packages_on_municipality_id"
     t.index ["package_id", "municipality_id"], name: "index_local_packages_on_package_id_and_municipality_id", unique: true
     t.index ["package_id"], name: "index_local_packages_on_package_id"
+  end
+
+  create_table "local_prices", force: :cascade do |t|
+    t.integer "local_package_id", null: false
+    t.integer "amount_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["local_package_id"], name: "index_local_prices_on_local_package_id"
   end
 
   create_table "municipalities", force: :cascade do |t|
@@ -47,5 +55,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_175400) do
 
   add_foreign_key "local_packages", "municipalities", on_delete: :cascade
   add_foreign_key "local_packages", "packages", on_delete: :cascade
+  add_foreign_key "local_prices", "local_packages", on_delete: :cascade
   add_foreign_key "prices", "packages"
 end
