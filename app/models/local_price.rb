@@ -3,7 +3,9 @@ class LocalPrice < ApplicationRecord
 
   validates :amount_cents, presence: true
 
-  def self.from_year(year)
-    where("cast(strftime('%Y', created_at) as int) = ?", year)
+  def self.from_date(year:, month: nil, day: nil)
+    params = { created_year: year, created_month: month, created_day: day }.compact
+    template = params.keys.map { |it| "#{it} = ?" }.join(' and ')
+    where([template, *params.values])
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_17_072529) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_06_114111) do
   create_table "local_packages", force: :cascade do |t|
     t.integer "package_id", null: false
     t.integer "municipality_id", null: false
@@ -27,6 +27,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_17_072529) do
     t.integer "amount_cents", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "created_year", type: :integer, null: false, as: "cast(strftime('%Y', created_at) as int)", stored: false
+    t.virtual "created_month", type: :integer, null: false, as: "cast(strftime('%m', created_at) as int)", stored: false
+    t.virtual "created_day", type: :integer, null: false, as: "cast(strftime('%d', created_at) as int)", stored: false
+    t.index ["local_package_id", "created_year", "created_month", "created_day"], name: "index_local_prices_on_created_date"
     t.index ["local_package_id"], name: "index_local_prices_on_local_package_id"
   end
 

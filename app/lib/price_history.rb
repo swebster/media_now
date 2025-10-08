@@ -28,7 +28,7 @@ class PriceHistory
 
   # extract the prices for the given year and sort them chronologically
   private_class_method def self.extract_prices(local_package, year)
-    local_prices = local_package.local_prices.from_year(year).order(:created_at)
+    local_prices = local_package.local_prices.from_date(year:).order(:created_at)
 
     local_prices.map(&:amount_cents)
   end
